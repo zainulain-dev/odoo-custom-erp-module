@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Sale Order Form View Inheritance -->
+    <record id="view_order_form_inherit_custom_erp" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.custom.erp</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <field name="x_total_weight" readonly="1"/>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Custom Notes" name="custom_notes">
+                    <group>
+                        <field name="x_custom_notes" placeholder="Enter internal notes for this sale order..."/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

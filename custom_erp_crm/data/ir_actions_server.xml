@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_send_custom_vip_email" model="ir.actions.server">
+        <field name="name">Send Custom VIP Email</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_view_types">form,list</field>
+        <field name="state">code</field>
+        <field name="code">
+# Log message to server output
+log("Executing Send Custom VIP Email server action for order: %s" % record.name)
+
+# Post tracking message to chatter
+if record.partner_id and record.partner_id.x_is_vip_client:
+    record.message_post(
+        body="VIP Client Alert: Custom VIP notification processed for order %s." % record.name,
+        subject="VIP Order Notification"
+    )
+else:
+    record.message_post(
+        body="Standard Client Notice: Custom notification processed for order %s." % record.name,
+        subject="Order Notification"
+    )
+        </field>
+    </record>
+</odoo>

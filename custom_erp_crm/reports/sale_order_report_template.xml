@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Custom Report Action -->
+    <record id="action_report_saleorder_custom" model="ir.actions.report">
+        <field name="name">Custom Sale Order</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">custom_erp_crm.report_saleorder_document_custom</field>
+        <field name="report_file">custom_erp_crm.report_saleorder_document_custom</field>
+        <field name="paperformat_id" ref="paperformat_custom_erp"/>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- Custom QWeb Template inheriting sale.report_saleorder_document -->
+    <template id="report_saleorder_document_custom" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//div[@id='total']" position="after">
+            <div class="row mt-4" id="custom_erp_crm_section">
+                <div class="col-6">
+                    <strong>Total Weight (Mock): </strong>
+                    <span t-field="doc.x_total_weight"/> kg
+                </div>
+                <div class="col-6" t-if="doc.x_custom_notes">
+                    <strong>Custom Internal Notes: </strong>
+                    <p t-field="doc.x_custom_notes"/>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>
